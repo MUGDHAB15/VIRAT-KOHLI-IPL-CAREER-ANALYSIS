@@ -9,7 +9,7 @@ Then I used SELECT, AND AGGREGATE FUNCTIONS to find out what kind of data is the
 
 I normalised the data by cleaning the season column and formatted it.
 
-I did EDA using various aggregate function, group by, order by, Window function, CTE's, Temp tables and joins.
+I did EDA using various aggregate function, group by, order by, Window function, CTE's, Temp tables and joins, ALTER tables, Insert into, and update tables.
 
 I explored the data to find out the following:
 
