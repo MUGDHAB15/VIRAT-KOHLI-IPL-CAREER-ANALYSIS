@@ -176,13 +176,32 @@ SET type_of_balls = CASE WHEN runs_off_bat = 0 then 'Dot_ball'
        WHEN runs_off_bat = 4 OR runs_off_bat = 6 THEN 'Boundry'
 	   else 'other_scoring_ball'
 	   END
+-------CREATE TEMP TABLE TO CALCULATE DOT VS BOUNDRIES BALL FOR VIRAT KOHLI
 
+CREATE TABLE #dotvsboundries
+(
+Types_of_balls nvarchar(500),
+Count_of_balls int
+)
+
+INSERT INTO #dotvsboundries
 SELECT  type_of_balls,count(type_of_balls) AS COUNT_OF_TYPE_OF_BALLS
 FROM IPLAnalysis.dbo.ipl_match_ball_by_ball_data
 where striker = 'V Kohli'
 GROUP BY type_of_balls
 
+SELECT * FROM #dotvsboundries
 
+ALTER TABLE #dotvsboundries
+ADD Total_balls int
+
+UPDATE #dotvsboundries
+SET Total_balls = (SELECT sum(Count_of_balls) as total_balls
+from #dotvsboundries)
+
+SELECT *,  round((CONVERT(FLOAT,Count_of_balls) / Total_balls) *100, 2) AS Percentage_of_balls_type
+from #dotvsboundries
+ORDER BY Percentage_of_balls_type DESC
 -----Top 10 batsman with most runs in IPL
 
 SELECT striker, SUM(runs_off_bat) as Total_runs, (COUNT(match_id)) as Total_balls_faced
@@ -256,8 +275,14 @@ CREATE TABLE #winningpercentage
    FROM IPLAnalysis.dbo.ipl_match_info_data
    where player_of_match = 'V Kohli' and team2  != 'Royal Challengers Bangalore' 
 
+ ALTER TABLE #winningpercentage
+ ADD Total_match int
 
- Select Distinct(team), Count(match_id) as Total_win_match, Round((CONVERT(float,Count(match_id))/14)*100, 2) AS Winning_percentage
+ update #winningpercentage
+ set Total_match = (SELECT COUNT(match_id) from #winningpercentage)
+
+
+ Select Distinct(team), Count(match_id) as Total_win_match, Round((CONVERT(float,Count(match_id))/Total_match)*100, 2) AS Winning_percentage
  from #winningpercentage
- group by team
+ group by team, Total_match
  order by Winning_percentage desc
