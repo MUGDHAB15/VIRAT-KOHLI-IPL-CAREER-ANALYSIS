@@ -48,6 +48,10 @@ Findings:
 
 13 Top ten bat's man with highest runs are: V Kohli, S Dhawan, DA Warner, RG Sharma, SK Raina, AB de Villiers, MS Dhoni, CH Gayle, RV Uthappa, AND KD Karthik
 
+14 Kohli won maximum matches against Delhi Daredevils, followed by Chennai Super Kings, Kolkata Knight riders AND Sunrisers Hyderabad
+
+15 Kohli won most of the matched in M Chinnaswamy Stadium
+
 
 There is lot more to find out but I am winding up with this only.....
 
